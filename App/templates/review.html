@@ -1,0 +1,46 @@
+{% extends 'm_base.html' %}
+{% load static %}
+{% block stylesheet %}{% static 'css/review.css' %}{% endblock %}
+{% block title %}이색기{% endblock  %}
+
+{% block content %}
+    <header>
+        <div class="bar_title">
+            <a href=""><img src="{% static 'img/title.png' %}" alt=""></a>
+        </div>
+        <div class="topbar">
+            <a href=""><img src="{% static 'img/arrow.png' %}" alt=""></a>
+        <div class="rightmenu">
+             <a href="#" class="searchb"><img src="{% static 'img/search.png' %}" alt=""></a>
+            <a href="#" class="menub"><img src="{% static 'img/menu.png' %}" alt=""></a>
+        </div>
+        </div>
+    </header>
+    <div class="searchbox hide">
+        <div class="searchbar">
+            <input type="text" placeholder="검색어를 입력하세요.">
+            <a href=""><img src="{% static 'img/search.png' %}" alt=""></a>
+        </div>
+        <div class="shadow"></div>
+    </div>
+    <form method="POST" enctype="multipart/form-data">
+        <h3 class="title_form">이색 카페 등록하기</h3>
+        <div class="text">
+            {% csrf_token %}
+            <div class="file">
+                <input type="file" name="photo">
+            </div>
+            <input type="text" placeholder="매장이름" name="store_name">
+            <textarea name="menu" cols="30" rows="10" placeholder="메뉴"></textarea>
+            <input type="text" placeholder="번호" name="tel">
+            <textarea name="time" cols="30" rows="10" placeholder="영업시간"></textarea>
+            <input type="text" placeholder="휴일" name="day">
+            <input type="text" placeholder="주차" name="park">
+            <input type="text" placeholder="주소" name="address">
+            <input type="text" name="tag" placeholder="태그">
+        </div>
+        <div class="submit">
+            <input type="submit" value="올리기">
+        </div>
+    </form>
+{% endblock %}

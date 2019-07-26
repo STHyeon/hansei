@@ -1,0 +1,122 @@
+{% extends 'm_base.html' %}
+{% load static %}
+    {% block stylesheet %}{% static 'css/detail.css' %}{% endblock %}
+    {% block title %}이색기{% endblock  %}
+
+{% block content %}
+    <header>
+        <div class="bar_title">{{s_post.store_name}}</div>
+        <div class="topbar">
+            <a href="{% url 'API:category' %}"><img src="{% static 'img/arrow.png' %}" alt=""></a>
+            <div class="rightmenu">
+                <a href="#" class="searchb"><img src="{% static 'img/search.png' %}" alt=""></a>
+                <a href="#"><img src="{% static 'img/menu.png' %}" alt=""></a>
+            </div>
+        </div>
+    </header>
+    <div class="searchbox hide">
+        <div class="searchbar">
+            <input type="text" placeholder="검색어를 입력하세요.">
+            <a href=""><img src="{% static 'img/search.png' %}" alt=""></a>
+        </div>
+        <div class="shadow"></div>
+    </div>
+
+    <div class="titleimg">
+        <img src="{{s_post.photo.url}}" alt="">
+    </div>
+
+    <section>
+        <nav>
+            <ul class="navbar">
+                <li>
+                    <button class="point b 1">정보</button>
+                </li>
+                <li>
+                    <button class="b 2">리뷰</button>
+                </li>
+            </ul>
+        </nav>
+        <div class="contents">
+        {% comment %} {% for s in s_post %} {% endcomment %}
+            {% comment %} <p><span>매장소개</span><br>반짝반짝</p> {% endcomment %}
+            <span>전화번호</span><p>{{s_post.tel}}</p>
+            <span>영업시간</span><p>{{s_post.time}}</p>
+            <span>휴무</span><p>{{s_post.day}}</p>
+            <span>주차</span><p>{{s_post.park}}</p>
+            <span>주소</span><p>{{s_post.address}}</p>
+        {% comment %} {% endfor %} {% endcomment %}
+            <div id="map"></div>
+        </div>
+
+        <div class="review hide">
+            <div class="write">
+                <a href="">글쓰기</a>
+            </div>
+            <ul class="R_ul">
+                <li>
+                    <div class="R_ul_box">
+                        <p class="name">송태현</p>
+                        <p class="day">2019-07-26</p>
+                    </div>
+                    <hr>
+                    <p class="con">정말로 맛있었습니다. gkgkgkgkgkgkgk</p>
+                </li>
+                <li>
+                    <p class="name">송태현</p>
+                    <p class="day">2019-07-26</p>
+                    <hr>
+                    <p class="con">정말로 맛있었습니다.</p>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script>
+        $( document ).ready(function() {
+            $('.1').click(function(){
+                $('.contents').removeClass('hide');
+                $('.review').addClass('hide');
+                $('.2').removeClass('point');
+                $(this).addClass('point');
+            })
+            $('.2').click(function(){
+                $('.contents').addClass('hide');
+                $('.review').removeClass('hide');
+                $('.1').removeClass('point');
+                $(this).addClass('point');
+            })
+            $('.searchb').click(function(){
+                $('.searchbox').removeClass('hide')
+            })
+            $('.shadow').click(function(){
+                $('.searchbox').addClass('hide')
+            })
+        });
+    </script>
+
+
+
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e5827c3590ec63beb093418d8c26b83a"></script>
+	<script>
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+        mapOption = { 
+            center: new kakao.maps.LatLng(37.5511391, 126.92224770000007), // 지도의 중심좌표
+            level: 3 // 지도의 확대 레벨
+        };
+
+        var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+        // 마커가 표시될 위치입니다 
+        var markerPosition  = new kakao.maps.LatLng(37.5511391, 126.92224770000007); 
+
+        // 마커를 생성합니다
+        var marker = new kakao.maps.Marker({
+            position: markerPosition
+        });
+
+        // 마커가 지도 위에 표시되도록 설정합니다
+        marker.setMap(map);
+        
+	</script>
+{% endblock %}

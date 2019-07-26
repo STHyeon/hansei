@@ -1,0 +1,86 @@
+{% extends 'm_base.html' %}
+{% load static %}
+{% block stylesheet %}{% static 'css/category.css' %}{% endblock %}
+{% block title %}이색기{% endblock  %}
+
+{% block content %}
+<body>
+    <header>
+        <div class="bar_title">
+            <a href="{% url 'API:main' %}"><img src="{% static 'img/title.png' %}" alt=""></a>
+        </div>
+        <div class="topbar">
+            <a href="{% url 'API:main' %}"><img src="{% static 'img/arrow.png' %}" alt=""></a>
+        <div class="rightmenu">
+             <a href="#" class="searchb"><img src="{% static 'img/search.png' %}" alt=""></a>
+            <a href="#"><img src="{% static 'img/menu.png' %}" alt=""></a>
+        </div>
+        </div>
+    </header>
+    <div class="searchbox hide">
+        <div class="searchbar">
+            <input type="text" placeholder="검색어를 입력하세요.">
+            <a href=""><img src="{% static 'img/search.png' %}" alt=""></a>
+        </div>
+        <div class="shadow"></div>
+    </div>
+
+    <nav>
+        <div class="arrow"></div>
+        <ul class="category">
+            <li><a href="{% url 'API:g_category' %}">사격</a></li>
+            <li><a href="{% url 'API:f_category' %}">낚시</a></li>
+            <li><a href="{% url 'API:r_category' %}">방탈출</a></li>
+            <li><a href="{% url 'API:b_category' %}">레이지룸</a></li>
+            <li><a href="">안티</a></li>
+            <li><a href="">양궁</a></li>
+        </ul>
+        <div class="arrow nag"></div>
+    </nav>
+
+    <section>
+        <ul class="category_list">
+        {% for posts in form %}
+            <li>
+                <a href="{% url 'API:detail' pk=posts.pk  %}">
+                    <img class="back" src="{{posts.photo.url}}" alt="">
+                    <h4>{{posts.store_name}}</h4>
+                    {% comment %} <p>아주 좋은 카페</p> {% endcomment %}
+                    <hr>
+                    <p>{{posts.address}}</p>
+                </a>
+                <img class="heart" src="{% static 'img/heart.png' %}" alt="">
+            </li>
+        {% endfor %}
+        </ul>
+        
+    </section>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script>
+        $('.category li').each(function(index, item){
+            $(item).css('left',""+index*80+"px");
+            console.log("'"+index*30+"px'"+"100px");
+        })
+
+        $( document ).ready(function() { 
+            $('.searchb').click(function(){
+                $('.searchbox').removeClass('hide')
+            })
+            $('.shadow').click(function(){
+                $('.searchbox').addClass('hide')
+            })
+            $('.heart').click(function(){
+                $(this).attr('src', '{% static 'img/ha.png' %}').removeClass('heart').addClass('ha');
+            })
+            $('.ha').click(function(){
+                $(this).attr('src', '{% static 'img/heart.png' %}').removeClass('ha').addClass('heart');
+            })
+
+        });
+    </script>
+</body>
+{% endblock %}

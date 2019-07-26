@@ -1,0 +1,111 @@
+html, body{
+    margin: 0px;
+}
+.hide{
+    display: none;
+}
+.titleimg img{
+    width: 100%;
+    height: 300px;
+    display: block;
+}
+section{
+    display: flex;
+    flex-direction: column;
+}
+nav{
+    width: 100%;
+}
+.navbar{
+    height: 50px;
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    display: flex;
+}
+.navbar li{
+    flex-grow: 1;
+    height: 100%;
+}
+.b{
+    width: 100%;
+    height: 100%;
+    background: white;
+    border: 1px solid #aaaaaa;
+    font-size: 1.1em;
+    font-weight: 700;
+    color: #aaaaaa;
+}
+.point{
+    width: 100%;
+    height: 100%;
+    background: white;
+    font-size: 1.1em;
+    border: 1px solid #aaaaaa;
+    border-bottom: 3px solid black;
+    font-weight: 700;
+    color: black;
+}
+.contents{
+    padding: 30px;
+}
+.contents p {
+    margin: 0px 0px 20px 0px;
+    font-size: 0.9em;
+}
+.contents span{
+    display: inline-block;
+    width: 100px;
+    font-weight: 700;
+    font-size: 1.1em;
+}
+#map{
+    width: 100%;
+    height: 250px;
+}
+.review{
+
+}
+.write{
+    margin: 10px;
+}
+.write a{
+    width: 80px;
+    height: 30px;
+    display: block;
+    background-color: powderblue;
+    text-decoration: none;
+    color: white;
+    text-align: center;
+    line-height: 30px;
+}
+.R_ul{
+    width: 100%;
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    display: flex;
+    flex-direction: column;
+}
+.R_ul li{
+    border: 1px solid black;
+    margin: 15px 30px;
+    padding: 10px 20px;
+}
+.R_ul li hr{
+    margin: 10px;
+}
+.R_ul_box{
+    margin-left: 40px;
+}
+.name{
+    margin: 0px;
+    font-size: 0.8em;
+}
+.day{
+    margin: 0px;
+    font-size: 0.8em;
+}
+.con{
+    margin: 10px 0px 0px 40px;
+}

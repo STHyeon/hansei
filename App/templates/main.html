@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+{% block stylesheet %}{% static 'css/main.css' %}{% endblock %}
+{% block title %}이색기{% endblock  %}
+
+{% block content %}
+    <header>
+        <div class="bar_title">
+            <a href=""><img src="{% static 'img/title.png' %}" alt=""></a>
+        </div>
+        <div class="topbar">
+            <a href=""><img src="{% static 'img/arrow.png' %}" alt=""></a>
+        <div class="rightmenu">
+             <a href="#" class="searchb"><img src="{% static 'img/search.png' %}" alt=""></a>
+            <a href="#" class="menub"><img src="{% static 'img/menu.png' %}" alt=""></a>
+        </div>
+        </div>
+    </header>
+    <div class="searchbox hide">
+        <div class="searchbar">
+            <input type="text" placeholder="검색어를 입력하세요.">
+            <a href=""><img src="{% static 'img/search.png' %}" alt=""></a>
+        </div>
+        <div class="shadow"></div>
+    </div>
+    
+    <div class="main">
+        <div class="mainimg"></div>
+        <div class="maintext">
+            <p>이색 카페 찾으러 가기</p>
+            <a href="{% url 'API:category' %}">카테고리 검색</a>
+        </div>
+    </div>
+
+    <div class="review">
+        <div class="reviewimg"></div>
+        <div class="reviewtext">
+            <p>이색 카페 등록하기</p>
+            <a href="{% url 'API:write' %}">카페 등록하기</a>
+        </div>
+    </div>
+{% endblock %}

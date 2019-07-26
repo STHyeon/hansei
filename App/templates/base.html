@@ -1,0 +1,135 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+	<link rel="stylesheet" href="{% block stylesheet %}{% endblock %}">
+	<link rel="stylesheet" href="{% static 'css/topbar.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 팝업라이브러리 -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <!-- jQuery 라이브러리 -->
+    <script 
+    src="https://code.jquery.com/jquery-3.3.1.js"
+  	integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  	crossorigin="anonymous"></script>
+	<!-- 구글 애드센스 -->
+	<meta name="google-site-verification" content="JxQy7UNZxOwrkiJD-k0Chv80JIVm79ttXe3tFtYsXv0" />
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<script>
+	  (adsbygoogle = window.adsbygoogle || []).push({
+	    google_ad_client: "ca-pub-5552721723401332",
+	    enable_page_level_ads: true
+	  });
+	</script>
+	<!-- 폰트 -->
+	{% comment %} <link href="https://fonts.googleapis.com/css?family=East+Sea+Dokdo" rel="stylesheet"> {% endcomment %}
+	<!-- Device-UUID -->
+	<script src="{% static 'device-uuid.js' %}"></script>
+</head>
+<body style="margin: 0px">
+<style>
+	html, body, input, button{
+		font-family: 'East Sea Dokdo', cursive;
+	}
+	.swal-footer{
+		text-align: center;
+	}
+	.swal-button{
+		background-color: rgb(16, 56, 148);
+	}
+	.swal-title{
+		font-size: 30px;
+	}
+	.swal-text{
+		font-size: 25px;
+	}
+	.swal-button{
+		font-size: 20px;
+	}
+</style>
+{% block content %}
+
+{% endblock content %}
+<!-- Machin ID를 이용해 계정 확인 -->
+<script>
+var uuid = new DeviceUUID().get()
+
+// 새로운 기계 접속 시 유저 생성하기
+createUser = function(){
+	swal({
+        title: "반갑습니다!",
+        text: "닉네임을 적어주세요.",
+        content: "input",
+        button: "확인",
+    })
+    .then(name => {
+	  	if (!name) throw null
+	 
+	  	console.log(name)
+		$.ajax({ 
+		    type: "POST", 
+		    url: "{% url 'API:create_machine' %}",
+		    data: {
+		        'machineID': uuid,
+		        'nickname': name,
+		        'csrfmiddlewaretoken': '{{ csrf_token }}'
+		    },
+		    dataType: "json", 
+		    success: function(response){
+		        console.log(response)
+		        if (response.status=='success'){
+		            location.reload()
+		        }
+		        else{
+		            swal({
+			            title: response.message,
+			            button: "확인",
+			        });
+		        }
+		    },
+		    error: function(request, status, error){
+		    },
+		});
+	})
+	.catch(err => {
+	 	if (err) {
+	    	swal("에러메세지", "The AJAX request failed!", "확인")
+	  	} else {
+	    	swal.stopLoading()
+	    	swal.close()
+	  	}
+	});
+}
+
+// 페이지 로드 시 환영 메세지 or 유저 생성
+$(document).ready(function(){
+
+	$.ajax({ 
+	    type: "POST", 
+	    url: "{% url 'API:check_machine' %}",
+	    data: {
+	        'machineID': uuid,
+	        'csrfmiddlewaretoken': '{{ csrf_token }}'
+	    },
+	    dataType: "json", 
+	    success: function(response){
+	        console.log(response)
+	        if (response.status=='error'){
+	            createUser()
+	        }
+	        else{
+	            swal({
+		            title: response.message,
+		            button: "확인",
+		        });
+	        }
+	    },
+	    error: function(request, status, error){
+	    },
+	});
+})
+</script>
+</body>
+</html>
